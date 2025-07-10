@@ -1,8 +1,8 @@
-# GPS Coordinate Selector Application
+# OSM Notes v0.1.0
 
 ## Overview
 
-This is a Vue.js-based GPS coordinate selector application that allows users to interact with maps and select coordinates. The application uses OpenLayers for mapping functionality, provides geolocation services, and includes comprehensive multimedia note-taking capabilities with external API integration for transcription and OSM tag generation.
+This is a Vue.js-based GPS coordinate selector application for OpenStreetMap note-taking that allows users to interact with maps and select coordinates. The application uses OpenLayers for mapping functionality, provides geolocation services, and includes comprehensive multimedia note-taking capabilities with external API integration for transcription and OSM tag generation.
 
 ## User Preferences
 

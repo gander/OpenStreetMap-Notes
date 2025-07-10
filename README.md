@@ -1,4 +1,4 @@
-# GPS Coordinate Selector
+# OSM Notes v0.1.0
 
 A frontend-only Vue 3 application for precise GPS coordinate selection using OpenStreetMap with crosshair targeting system. Features multimedia note-taking capabilities with voice recording, photo capture, and text notes, all linked to specific GPS coordinates.
 

@@ -1,9 +1,23 @@
-# Changelog
+# Changelog - OSM Notes
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+**Version Management**: This project follows semantic versioning and increments version numbers with each code update as requested.
+
+## [0.1.1] - 2025-07-10
+
+### Changed
+- **Project Name**: Updated from "GPS Coordinate Selector" to "OSM Notes v0.1.0"
+- **Application Title**: Updated in HTML title, header, and all documentation
+- **Versioning Policy**: Established automatic version incrementing with each code change
+
+### Documentation
+- **CHANGELOG**: Added version management policy and project name change
+- **README**: Updated project title to reflect OSM Notes focus
+- **replit.md**: Updated project overview with new name and focus
 
 ## [0.1.0] - 2025-07-10
 
