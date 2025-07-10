@@ -18,6 +18,15 @@
         </button>
         
         <button 
+          @click="toggleEventLogger" 
+          class="btn btn--secondary"
+          title="Show event log"
+        >
+          <i class="fas fa-list"></i>
+          <span class="btn__text">Event Log</span>
+        </button>
+        
+        <button 
           @click="openConfigPanel" 
           class="btn btn--secondary"
           title="Open configuration"
@@ -56,17 +65,14 @@
       <!-- Configuration Panel -->
       <ConfigPanel 
         :is-visible="showConfigPanel"
-        :show-event-logger="showEventLogger"
         @close="showConfigPanel = false"
         @save-config="handleSaveConfig"
-        @toggle-event-logger="toggleEventLogger"
       />
 
       <!-- Event Logger Panel -->
       <EventLogger 
         v-if="showEventLogger"
         :events="events"
-        @close="showEventLogger = false"
       />
     </main>
   </div>

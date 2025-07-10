@@ -6,10 +6,7 @@
         Event Log
       </h3>
       <div class="event-logger__controls">
-
-        <button @click="$emit('close')" class="btn btn--small btn--secondary">
-          <i class="fas fa-times"></i>
-        </button>
+        <!-- Controls removed - event log stays open -->
       </div>
     </div>
     
@@ -104,7 +101,7 @@ export default {
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  z-index: 2000;
+  z-index: 3000;
   display: flex;
   flex-direction: column;
 }

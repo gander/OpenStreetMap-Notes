@@ -122,13 +122,6 @@
         </h4>
         
         <div class="config-field">
-          <button @click="toggleEventLogger" class="btn btn--secondary btn--full-width">
-            <i class="fas fa-list"></i>
-            {{ showEventLogger ? 'Hide' : 'Show' }} Event Log
-          </button>
-        </div>
-        
-        <div class="config-field">
           <button @click="exportConfig" class="btn btn--secondary btn--full-width">
             <i class="fas fa-download"></i>
             Export Configuration
@@ -165,13 +158,9 @@ export default {
     isVisible: {
       type: Boolean,
       default: false
-    },
-    showEventLogger: {
-      type: Boolean,
-      default: false
     }
   },
-  emits: ['close', 'save-config', 'toggle-event-logger'],
+  emits: ['close', 'save-config'],
   setup(props, { emit }) {
     const config = reactive({
       mediaToTextEndpoint: '',
@@ -230,10 +219,6 @@ export default {
       }
     }
     
-    const toggleEventLogger = () => {
-      emit('toggle-event-logger')
-    }
-    
     // Load configuration when component becomes visible
     watch(() => props.isVisible, (newValue) => {
       if (newValue) {
@@ -248,8 +233,7 @@ export default {
       config,
       saveConfig,
       exportConfig,
-      resetConfig,
-      toggleEventLogger
+      resetConfig
     }
   }
 }
