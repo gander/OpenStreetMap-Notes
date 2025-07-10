@@ -34,6 +34,26 @@
           </ol-feature>
         </ol-source-vector>
       </ol-vector-layer>
+
+      <!-- Note Pins -->
+      <ol-vector-layer>
+        <ol-source-vector>
+          <ol-feature 
+            v-for="note in notes" 
+            :key="note.id"
+            @click="handlePinClick(note)"
+          >
+            <ol-geom-point :coordinates="transform([note.coordinates.lng, note.coordinates.lat], 'EPSG:4326', 'EPSG:3857')" />
+            <ol-style>
+              <ol-style-circle :radius="12">
+                <ol-style-fill :color="note.type === 'local' ? '#28a745' : '#dc3545'" />
+                <ol-style-stroke color="white" :width="2" />
+              </ol-style-circle>
+              <ol-style-text :text="'📍'" :font="'16px sans-serif'" />
+            </ol-style>
+          </ol-feature>
+        </ol-source-vector>
+      </ol-vector-layer>
     </ol-map>
     
     <!-- Map Controls -->
@@ -63,7 +83,13 @@ import { transform } from 'ol/proj'
 
 export default {
   name: 'MapContainer',
-  emits: ['coordinates-changed', 'location-found', 'location-error', 'map-event'],
+  props: {
+    notes: {
+      type: Array,
+      default: () => []
+    }
+  },
+  emits: ['coordinates-changed', 'location-found', 'location-error', 'map-event', 'pin-clicked'],
   setup(props, { emit }) {
     const view = ref(null)
     const isLocating = ref(false)
@@ -102,6 +128,11 @@ export default {
         lng: lng,
         accuracy: null
       })
+    }
+
+    const handlePinClick = (note) => {
+      emit('pin-clicked', note)
+      emit('map-event', { type: 'pin_clicked', message: `Clicked ${note.type} note pin` })
     }
 
     const locateUser = async () => {
@@ -210,8 +241,10 @@ export default {
       locationStatus,
       handleMapMove,
       handleMapClick,
+      handlePinClick,
       locateUser,
-      getStatusIcon
+      getStatusIcon,
+      transform
     }
   }
 }
