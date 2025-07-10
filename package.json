@@ -20,6 +20,7 @@
     "eslint-plugin-vue": "^10.3.0",
     "jsdom": "^26.1.0",
     "leaflet": "^1.9.4",
+    "terser": "^5.43.1",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vitest": "^3.2.4",

@@ -19,6 +19,10 @@ args = "Vue GPS App"
 task = "workflow.run"
 args = "Development Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Auto Build"
+
 [[workflows.workflow]]
 name = "Vue GPS App"
 author = "agent"
@@ -36,3 +40,15 @@ author = "agent"
 task = "shell.exec"
 args = "vite"
 waitForPort = 5000
+
+[[workflows.workflow]]
+name = "Auto Build"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "vite build && echo \"Build completed to dist at $(date)\""
+
+[[ports]]
+localPort = 5000
+externalPort = 80

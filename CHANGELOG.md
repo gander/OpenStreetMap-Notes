@@ -48,6 +48,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Progressive Enhancement**: Graceful degradation for unsupported features
 - **Accessibility**: ARIA labels, keyboard navigation, and screen reader support
 
+#### Build System
+- **Automatic Building**: Code changes trigger automatic builds to `dist` directory
+- **Production Optimization**: Terser minification and code splitting enabled
+- **Asset Organization**: Separate bundles for vendor, maps, and application code
+- **Development Workflow**: Hot reload during development, optimized builds for production
+
 ### Technical Details
 
 #### Dependencies
@@ -57,6 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @vueuse/core 13.0.0 (composable utilities)
 - TypeScript 5.8.0 (type system)
 - Vitest 3.2.0 (testing framework)
+- Terser (JavaScript minification)
 
 #### Architecture
 - **Composables Pattern**: Reusable logic with useGeolocation and useEventLogger
