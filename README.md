@@ -55,43 +55,7 @@ The application integrates with external APIs for:
 - **🟢 Green Pins**: Locally created notes (editable)
 - **🔴 Red Pins**: Server-saved notes (read-only)
 
-## Testing
 
-```bash
-# Run tests
-npm run test
-# or
-bun run test
-
-# Run tests with UI
-npm run test:ui
-# or
-bun run test:ui
-
-# Run tests once
-npm run test:run
-# or
-bun run test:run
-```
-
-## Linting
-
-```bash
-# Check code style
-npm run lint
-# or
-bun run lint
-
-# Fix linting issues
-npm run lint:fix
-# or
-bun run lint:fix
-
-# Type checking
-npm run type-check
-# or
-bun run type-check
-```
 
 ## Browser Support
 
@@ -123,8 +87,6 @@ Adam Gąsowski
 
 ## Version
 
-Current version: 0.1.1
-
-**Version Management**: This project follows semantic versioning and increments version numbers with each code update. The current version is displayed in the application title bar.
+Current version: 0.1.3
 
 See [CHANGELOG.md](CHANGELOG.md) for version history and updates.
