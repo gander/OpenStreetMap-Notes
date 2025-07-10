@@ -27,44 +27,7 @@ A frontend-only Vue 3 application for precise GPS coordinate selection using Ope
 
 ## Quick Start
 
-### Prerequisites
-
-- Node.js 20+ or Bun 1.2+
-- Modern browser with geolocation support
-
-### Installation
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd gps-coordinate-selector
-
-# Install dependencies
-npm install
-# or
-bun install
-
-# Start development server
-npm run dev
-# or
-bun run dev
-```
-
-The application will be available at `http://localhost:5000`
-
-### Building for Production
-
-```bash
-# Build for production
-npm run build
-# or
-bun run build
-
-# Preview production build
-npm run preview
-# or
-bun run preview
-```
+The application runs on Replit with automatic setup. Access it through the Replit webview once the project starts.
 
 ## Usage
 

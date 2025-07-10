@@ -13,33 +13,11 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Vue GPS App"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Development Server"
-
-[[workflows.workflow.tasks]]
-task = "workflow.run"
 args = "Auto Build"
 
-[[workflows.workflow]]
-name = "Vue GPS App"
-author = "agent"
-
 [[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm install && npm run dev"
-waitForPort = 5000
-
-[[workflows.workflow]]
-name = "Development Server"
-author = "agent"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "vite"
-waitForPort = 5000
+task = "workflow.run"
+args = "OSM Notes"
 
 [[workflows.workflow]]
 name = "Auto Build"
@@ -48,6 +26,19 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "vite build && echo \"Build completed to dist at $(date)\""
+
+[[workflows.workflow]]
+name = "OSM Notes"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "vite --host 0.0.0.0 --port 5000"
+waitForPort = 5000
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
 
 [[ports]]
 localPort = 5000
