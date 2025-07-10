@@ -44,11 +44,99 @@ The application runs on Replit with automatic setup. Access it through the Repli
 
 ### External API Integration
 
-The application integrates with external APIs for:
+The application integrates with three external APIs:
 
-- **Media-to-Text Conversion** (Endpoint #1): Converts audio and images to text
-- **OSM Tag Generation** (Endpoint #2): Generates OSM tags from note content
-- **Data Storage/Retrieval** (Endpoint #3): Saves and loads coordinate data
+#### Endpoint #1: Media-to-Text Conversion
+**Purpose**: Converts audio recordings and images to text
+**Method**: POST
+**Data Sent**:
+```json
+{
+  "media": "base64_encoded_audio_or_image",
+  "mediaType": "audio/webm" or "image/jpeg",
+  "coordinates": {
+    "latitude": 52.2297,
+    "longitude": 21.0122
+  },
+  "timestamp": "2025-01-10T12:30:00Z"
+}
+```
+**Expected Response**:
+```json
+{
+  "success": true,
+  "transcription": "Transcribed text from audio/OCR from image",
+  "confidence": 0.95
+}
+```
+
+#### Endpoint #2: OSM Tag Generation
+**Purpose**: Generates OpenStreetMap tags from note content
+**Method**: POST
+**Data Sent**:
+```json
+{
+  "noteText": "Restaurant with outdoor seating",
+  "coordinates": {
+    "latitude": 52.2297,
+    "longitude": 21.0122
+  },
+  "context": "urban_area"
+}
+```
+**Expected Response**:
+```json
+{
+  "success": true,
+  "tags": {
+    "amenity": "restaurant",
+    "outdoor_seating": "yes",
+    "cuisine": "international"
+  },
+  "confidence": 0.88
+}
+```
+
+#### Endpoint #3: Data Storage/Retrieval
+**Purpose**: Bidirectional storage for coordinate data with notes and tags
+
+**Save Data (POST)**:
+```json
+{
+  "coordinates": {
+    "latitude": 52.2297,
+    "longitude": 21.0122
+  },
+  "notes": [
+    {
+      "type": "text",
+      "content": "Restaurant description",
+      "timestamp": "2025-01-10T12:30:00Z"
+    }
+  ],
+  "osmTags": {
+    "amenity": "restaurant"
+  }
+}
+```
+
+**Load Data (GET)**: Query parameters for viewport bounds
+```
+?minLat=52.2&maxLat=52.3&minLon=21.0&maxLon=21.1
+```
+**Expected Response**:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "unique_id",
+      "coordinates": {...},
+      "notes": [...],
+      "osmTags": {...}
+    }
+  ]
+}
 
 ### Pin System
 
