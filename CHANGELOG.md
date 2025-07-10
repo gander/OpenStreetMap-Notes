@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Version Management**: This project follows semantic versioning and increments version numbers with each code update as requested.
 
+## [0.1.6] - 2025-07-10
+
+### Fixed
+- **Event Logger Panel Display**: Fixed event logger panel to show properly when Event Log button is clicked
+- **Event Type Icons**: Added missing icon mappings for 'note' and 'config' event types
+- **Event Type Styling**: Added visual styling for 'note' and 'config' event types with distinct colors
+
+### Added
+- **Initial Test Events**: Added startup events to ensure event logger has content to display
+- **Console Debugging**: Added console logging to help verify event logger state
+
+### Technical Details
+- Added 'note' event type with yellow color scheme (#ffc107)
+- Added 'config' event type with green color scheme (#20c997)
+- Enhanced event icon mapping for better visual feedback
+- Added test events on application mount to verify functionality
+
 ## [0.1.5] - 2025-07-10
 
 ### Fixed

@@ -1,0 +1,1 @@
+import{i as r}from"./pako.esm-DlXhL5DR.js";import{B as e}from"./maps-B63TE_RA.js";import"./vendor-ByBhMQkW.js";class s extends e{decodeBlock(e){return r(new Uint8Array(e)).buffer}}export{s as default};

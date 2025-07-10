@@ -62,6 +62,8 @@ export default {
         ui: 'fas fa-mouse-pointer',
         system: 'fas fa-cog',
         error: 'fas fa-exclamation-triangle',
+        note: 'fas fa-sticky-note',
+        config: 'fas fa-sliders-h',
         map_initialized: 'fas fa-map',
         map_moved: 'fas fa-arrows-alt',
         map_zoomed: 'fas fa-search',
@@ -169,6 +171,16 @@ export default {
 .event-logger__item--error {
   border-left-color: #dc3545;
   background: #fff5f5;
+}
+
+.event-logger__item--note {
+  border-left-color: #ffc107;
+  background: #fffbf0;
+}
+
+.event-logger__item--config {
+  border-left-color: #20c997;
+  background: #f0fff8;
 }
 
 .event-logger__item--map,

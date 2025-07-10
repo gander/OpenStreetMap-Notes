@@ -4,7 +4,7 @@
     <header class="header">
       <h1 class="header__title">
         <i class="fas fa-crosshairs"></i>
-        OSM Notes v0.1.5
+        OSM Notes v0.1.6
       </h1>
       <div class="header__controls">
         <button 
@@ -165,6 +165,10 @@ export default {
 
     onMounted(() => {
       logEvent('system', 'Application initialized with note-taking capabilities')
+      // Add test events to verify event logger is working
+      logEvent('system', 'Event logger system started')
+      logEvent('ui', 'User interface loaded successfully')
+      console.log('Current events:', events.value)
     })
 
     return {
