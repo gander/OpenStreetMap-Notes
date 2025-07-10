@@ -1,6 +1,40 @@
 <template>
   <div class="map-container">
-    <div ref="mapElement" class="map"></div>
+    <!-- OpenLayers Map -->
+    <ol-map
+      :loadTilesWhileAnimating="true"
+      :loadTilesWhileInteracting="true"
+      style="height: 100%"
+      @moveend="handleMapMove"
+      @click="handleMapClick"
+    >
+      <ol-view
+        ref="view"
+        :center="center"
+        :zoom="zoom"
+        :projection="projection"
+      />
+
+      <!-- OpenStreetMap Layer -->
+      <ol-tile-layer>
+        <ol-source-osm />
+      </ol-tile-layer>
+
+      <!-- GPS Location Marker -->
+      <ol-vector-layer v-if="userLocation">
+        <ol-source-vector>
+          <ol-feature>
+            <ol-geom-point :coordinates="userLocation" />
+            <ol-style>
+              <ol-style-circle :radius="8">
+                <ol-style-fill color="blue" />
+                <ol-style-stroke color="white" :width="2" />
+              </ol-style-circle>
+            </ol-style>
+          </ol-feature>
+        </ol-source-vector>
+      </ol-vector-layer>
+    </ol-map>
     
     <!-- Map Controls -->
     <div class="map-controls">
@@ -23,79 +57,51 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
-import L from 'leaflet'
+import { ref, computed } from 'vue'
 import { useGeolocation } from '../composables/useGeolocation'
-
-// Fix for default markers in Leaflet
-delete L.Icon.Default.prototype._getIconUrl
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-})
+import { transform } from 'ol/proj'
 
 export default {
   name: 'MapContainer',
   emits: ['coordinates-changed', 'location-found', 'location-error', 'map-event'],
   setup(props, { emit }) {
-    const mapElement = ref(null)
-    const map = ref(null)
-    const locationMarker = ref(null)
+    const view = ref(null)
     const isLocating = ref(false)
     const locationStatus = ref(null)
+    const userLocation = ref(null)
+
+    // Map configuration
+    const center = ref([0, 0]) // Will be updated when location is found
+    const zoom = ref(2)
+    const projection = ref('EPSG:3857')
 
     const { getCurrentPosition } = useGeolocation()
 
-    const initializeMap = async () => {
-      if (!mapElement.value) return
-
-      // Initialize map with default coordinates (London)
-      map.value = L.map(mapElement.value, {
-        zoomControl: false,
-        attributionControl: true
-      }).setView([51.505, -0.09], 13)
-
-      // Add OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 19
-      }).addTo(map.value)
-
-      // Add zoom control to bottom right
-      L.control.zoom({
-        position: 'bottomright'
-      }).addTo(map.value)
-
-      // Add map event listeners
-      map.value.on('moveend', handleMapMove)
-      map.value.on('zoomend', handleMapZoom)
-      map.value.on('click', handleMapClick)
-
-      emit('map-event', { type: 'map_initialized', message: 'Map initialized successfully' })
-
-      // Try to get initial GPS location
-      await locateUser()
+    const handleMapMove = (event) => {
+      if (view.value) {
+        const center = view.value.getCenter()
+        const [lng, lat] = transform(center, 'EPSG:3857', 'EPSG:4326')
+        
+        emit('coordinates-changed', {
+          lat: lat,
+          lng: lng,
+          accuracy: null
+        })
+        emit('map-event', { type: 'map_moved', message: `Map moved to ${lat.toFixed(6)}, ${lng.toFixed(6)}` })
+      }
     }
 
-    const handleMapMove = () => {
-      const center = map.value.getCenter()
+    const handleMapClick = (event) => {
+      const [lng, lat] = transform(event.coordinate, 'EPSG:3857', 'EPSG:4326')
+      
+      emit('map-event', { type: 'map_clicked', message: `Map clicked at ${lat.toFixed(6)}, ${lng.toFixed(6)}` })
+      
+      // Update coordinates for crosshair
       emit('coordinates-changed', {
-        lat: center.lat,
-        lng: center.lng,
+        lat: lat,
+        lng: lng,
         accuracy: null
       })
-      emit('map-event', { type: 'map_moved', message: `Map moved to ${center.lat.toFixed(6)}, ${center.lng.toFixed(6)}` })
-    }
-
-    const handleMapZoom = () => {
-      const zoom = map.value.getZoom()
-      emit('map-event', { type: 'map_zoomed', message: `Map zoom changed to ${zoom}` })
-    }
-
-    const handleMapClick = (e) => {
-      map.value.setView([e.latlng.lat, e.latlng.lng])
-      emit('map-event', { type: 'map_clicked', message: `Map clicked at ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}` })
     }
 
     const locateUser = async () => {
@@ -113,29 +119,13 @@ export default {
 
         const { latitude, longitude, accuracy } = position.coords
 
-        // Update map view
-        map.value.setView([latitude, longitude], 16)
-
-        // Remove existing location marker
-        if (locationMarker.value) {
-          map.value.removeLayer(locationMarker.value)
-        }
-
-        // Add location marker
-        locationMarker.value = L.marker([latitude, longitude], {
-          title: 'Your Location'
-        }).addTo(map.value)
-
-        // Add accuracy circle
-        const accuracyCircle = L.circle([latitude, longitude], {
-          radius: accuracy,
-          color: '#3388ff',
-          fillColor: '#3388ff',
-          fillOpacity: 0.1,
-          weight: 2
-        }).addTo(map.value)
-
-        locationMarker.value.accuracyCircle = accuracyCircle
+        // Convert to Web Mercator projection for OpenLayers
+        const transformedCoords = transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857')
+        
+        // Update map center and zoom
+        center.value = transformedCoords
+        zoom.value = 16
+        userLocation.value = transformedCoords
 
         locationStatus.value = { 
           type: 'success', 
@@ -153,6 +143,8 @@ export default {
           lng: longitude,
           accuracy: accuracy
         })
+
+        emit('map-event', { type: 'gps_location', message: `GPS location: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}` })
 
         // Clear status after 3 seconds
         setTimeout(() => {
@@ -204,21 +196,20 @@ export default {
       }
     }
 
-    onMounted(async () => {
-      await nextTick()
-      await initializeMap()
-    })
-
-    onUnmounted(() => {
-      if (map.value) {
-        map.value.remove()
-      }
-    })
+    // Initialize with default location (London)
+    center.value = transform([-0.09, 51.505], 'EPSG:4326', 'EPSG:3857')
+    zoom.value = 13
 
     return {
-      mapElement,
+      view,
+      center,
+      zoom,
+      projection,
+      userLocation,
       isLocating,
       locationStatus,
+      handleMapMove,
+      handleMapClick,
       locateUser,
       getStatusIcon
     }

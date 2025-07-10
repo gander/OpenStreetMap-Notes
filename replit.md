@@ -18,7 +18,7 @@ License: MIT.
 ### Frontend Architecture
 - **Framework**: Vue 3 with Composition API and TypeScript 5.8
 - **Build Tool**: Vite 6 for fast development and optimized builds
-- **Map Library**: OpenLayers (vue3-openlayers) for interactive mapping functionality
+- **Map Library**: OpenLayers (vue3-openlayers) for interactive mapping functionality with precise coordinate selection
 - **Styling**: Custom CSS with responsive design patterns
 - **State Management**: Vue's built-in reactivity with composables pattern
 - **Testing**: Vitest 3.2 with TDD approach and Vue Test Utils
@@ -68,18 +68,17 @@ License: MIT.
 1. **User Interaction**: Users interact with the map interface to select coordinates
 2. **Geolocation Services**: Browser geolocation API is used to get user's current position
 3. **Event Logging**: All user interactions and system events are logged for debugging and analytics
-4. **Map Updates**: Leaflet handles map rendering and coordinate selection
+4. **Map Updates**: OpenLayers handles map rendering and coordinate selection with crosshair targeting
 
 ## External Dependencies
 
 ### Core Dependencies
 - **Vue 3.5.17**: Main frontend framework
-- **Leaflet 1.9.4**: Interactive map library
+- **OpenLayers**: Interactive map library with vue3-openlayers integration
 - **Vite 6.3.5**: Build tool and development server
 - **@vitejs/plugin-vue 5.2.4**: Vue support for Vite
 
 ### CDN Resources
-- **Leaflet CSS**: Map styling from unpkg CDN
 - **Font Awesome 6.4.0**: Icon library from CDN
 
 ## Deployment Strategy
@@ -93,14 +92,14 @@ License: MIT.
 - **Asset Organization**: Assets bundled in `assets` directory
 - **Code Splitting**: 
   - `vendor` chunk for Vue core
-  - `maps` chunk for Leaflet library
+  - `maps` chunk for OpenLayers library
 - **Minification**: Terser used for JavaScript minification
 - **Optimization**: Dependencies pre-bundled for faster loading
 
 ### Configuration Features
 - **Vue Options API**: Disabled for smaller bundle size
 - **Vue DevTools**: Disabled in production
-- **Leaflet Optimization**: Pre-bundled for better performance
+- **OpenLayers Optimization**: Pre-bundled for better performance
 
 ## Technical Notes
 

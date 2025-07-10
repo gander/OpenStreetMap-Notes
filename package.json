@@ -20,11 +20,14 @@
     "eslint-plugin-vue": "^10.3.0",
     "jsdom": "^26.1.0",
     "leaflet": "^1.9.4",
+    "ol": "^10.6.1",
+    "ol-ext": "^4.0.33",
     "terser": "^5.43.1",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vitest": "^3.2.4",
     "vue": "^3.5.17",
-    "vue-tsc": "^3.0.1"
+    "vue-tsc": "^3.0.1",
+    "vue3-openlayers": "^11.6.2"
   }
 }

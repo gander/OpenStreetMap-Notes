@@ -31,18 +31,13 @@
         <Crosshair />
       </div>
 
-      <!-- Coordinate Display -->
-      <CoordinateDisplay 
-        :coordinates="currentCoordinates"
-        @copy-coordinates="handleCopyCoordinates"
-      />
+
 
       <!-- Event Logger Panel -->
       <EventLogger 
         v-if="showEventLogger"
         :events="events"
         @close="showEventLogger = false"
-        @clear-events="clearEvents"
       />
     </main>
   </div>
@@ -53,7 +48,7 @@ import { ref, onMounted } from 'vue'
 import MapContainer from './components/MapContainer.vue'
 import Crosshair from './components/Crosshair.vue'
 import EventLogger from './components/EventLogger.vue'
-import CoordinateDisplay from './components/CoordinateDisplay.vue'
+
 import { useEventLogger } from './composables/useEventLogger'
 
 export default {
@@ -62,13 +57,13 @@ export default {
     MapContainer,
     Crosshair,
     EventLogger,
-    CoordinateDisplay
+
   },
   setup() {
     const showEventLogger = ref(false)
     const currentCoordinates = ref({ lat: null, lng: null, accuracy: null })
     
-    const { events, logEvent, clearEvents } = useEventLogger()
+    const { events, logEvent } = useEventLogger()
 
     const toggleEventLogger = () => {
       showEventLogger.value = !showEventLogger.value
@@ -88,9 +83,7 @@ export default {
       logEvent('error', `GPS error: ${error.message}`)
     }
 
-    const handleCopyCoordinates = (coords) => {
-      logEvent('ui', `Coordinates copied to clipboard: ${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`)
-    }
+
 
     onMounted(() => {
       logEvent('system', 'Application initialized')
@@ -104,9 +97,8 @@ export default {
       handleCoordinatesChanged,
       handleLocationFound,
       handleLocationError,
-      handleCopyCoordinates,
-      logEvent,
-      clearEvents
+
+      logEvent
     }
   }
 }

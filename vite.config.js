@@ -16,13 +16,13 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['vue'],
-          maps: ['leaflet']
+          maps: ['ol', 'vue3-openlayers']
         }
       }
     }
   },
   optimizeDeps: {
-    include: ['leaflet']
+    include: ['ol', 'vue3-openlayers']
   },
   define: {
     __VUE_OPTIONS_API__: false,

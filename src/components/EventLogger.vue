@@ -6,10 +6,7 @@
         Event Log
       </h3>
       <div class="event-logger__controls">
-        <button @click="$emit('clear-events')" class="btn btn--small btn--secondary">
-          <i class="fas fa-trash"></i>
-          Clear
-        </button>
+
         <button @click="$emit('close')" class="btn btn--small btn--secondary">
           <i class="fas fa-times"></i>
         </button>
@@ -56,7 +53,7 @@ export default {
       required: true
     }
   },
-  emits: ['close', 'clear-events'],
+  emits: ['close'],
   setup(props) {
     const logContent = ref(null)
 
