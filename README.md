@@ -137,6 +137,7 @@ The application integrates with three external APIs:
     }
   ]
 }
+```
 
 ### Pin System
 
