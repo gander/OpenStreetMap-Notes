@@ -94,14 +94,24 @@ License: MIT.
 - **Server Configuration**: Vite dev server runs on host 0.0.0.0, port 5000 with strict port enforcement
 - **Hot Module Replacement**: Enabled through Vite for fast development
 
-### Production Build
-- **Output Directory**: `dist` folder
-- **Asset Organization**: Assets bundled in `assets` directory
+### Production Build (Updated: July 10, 2025)
+- **Build Command**: `vite build` (verified working)
+- **Output Directory**: `dist` folder with complete index.html and assets
+- **Asset Organization**: 14 optimized files in `assets` directory
 - **Code Splitting**: 
-  - `vendor` chunk for Vue core
-  - `maps` chunk for OpenLayers library
+  - `vendor` chunk for Vue core (58.34 kB)
+  - `maps` chunk for OpenLayers library (1.8 MB)
+  - Main application chunk (23.92 kB)
+- **Build Process**: Successfully transforms 495 modules in ~24 seconds
 - **Minification**: Terser used for JavaScript minification
 - **Optimization**: Dependencies pre-bundled for faster loading
+
+### Deployment Configuration (Fixed: July 10, 2025)
+- **Deployment Target**: Static
+- **Public Directory**: `dist`
+- **Required Build Command**: `vite build`
+- **Build Script**: Created `build.sh` for manual builds with verification
+- **Asset Verification**: Confirmed index.html (714 bytes) and all assets properly generated
 
 ### Configuration Features
 - **Vue Options API**: Disabled for smaller bundle size
