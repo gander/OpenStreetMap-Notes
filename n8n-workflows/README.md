@@ -169,15 +169,56 @@ Each workflow generates a webhook URL that can be used in the application:
 
 ## Integration with OSM Notes Application
 
-In file `src/components/ConfigPanel.vue` set:
+### Configuration Panel Setup
 
-```javascript
-{
-  mediaToTextEndpoint: 'https://your-n8n-instance.com/webhook/media-to-text',
-  osmTagEndpoint: 'https://your-n8n-instance.com/webhook/generate-osm-tags',
-  dataStorageEndpoint: 'https://your-n8n-instance.com/webhook/notes'
-}
+Once your n8n workflows are active, configure the OSM Notes application by clicking the **Config** button in the application header. Fill in the following fields:
+
+#### API Endpoint Configuration:
+
+**1. Media-to-Text API Endpoint**
+- **Field Label**: "Media to Text API"
+- **Value**: `https://your-n8n-instance.com/webhook/media-to-text`
+- **Description**: Converts audio recordings and images to text using AI
+
+**2. OSM Tag Generation API Endpoint**
+- **Field Label**: "OSM Tag Generation API" 
+- **Value**: `https://your-n8n-instance.com/webhook/generate-osm-tags`
+- **Description**: Generates OpenStreetMap tags from note content
+
+**3. Data Storage API Endpoint**
+- **Field Label**: "Data Storage API"
+- **Value**: `https://your-n8n-instance.com/webhook/notes`
+- **Description**: Stores and retrieves notes from external service
+
+#### Configuration Steps:
+
+1. **Open Configuration Panel**
+   - Click the "Config" button in the top-right header of the OSM Notes application
+   - The configuration panel will slide out from the right side
+
+2. **Enter n8n Webhook URLs**
+   - Copy the webhook URLs from your active n8n workflows
+   - Paste each URL into the corresponding API endpoint field
+   - Ensure URLs include `/webhook/` path and correct endpoint names
+
+3. **Test Configuration**
+   - Click "Save Configuration" to apply settings
+   - Test each endpoint by creating notes with different media types
+   - Verify AI responses and data storage functionality
+
+4. **Troubleshooting**
+   - Check n8n workflow execution logs if endpoints fail
+   - Verify webhook URLs are accessible and workflows are active
+   - Ensure API credentials are properly configured in n8n
+
+#### Example Configuration:
 ```
+Media to Text API: https://n8n.yourcompany.com/webhook/media-to-text
+OSM Tag Generation API: https://n8n.yourcompany.com/webhook/generate-osm-tags  
+Data Storage API: https://n8n.yourcompany.com/webhook/notes
+```
+
+**Note**: Replace `n8n.yourcompany.com` with your actual n8n instance domain. The configuration persists in browser local storage.
 
 ## AI Agent Node Functions
 
