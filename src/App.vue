@@ -4,7 +4,7 @@
     <header class="header">
       <h1 class="header__title">
         <i class="fas fa-crosshairs"></i>
-        OSM Notes v0.1.6
+        OSM Notes v0.1.7
       </h1>
       <div class="header__controls">
         <button 
@@ -17,14 +17,7 @@
           <span class="btn__text">Add Note</span>
         </button>
         
-        <button 
-          @click="toggleEventLogger" 
-          class="btn btn--secondary"
-          title="Show event log"
-        >
-          <i class="fas fa-list"></i>
-          <span class="btn__text">Event Log</span>
-        </button>
+
         
         <button 
           @click="openConfigPanel" 
@@ -69,11 +62,7 @@
         @save-config="handleSaveConfig"
       />
 
-      <!-- Event Logger Panel -->
-      <EventLogger 
-        v-if="showEventLogger"
-        :events="events"
-      />
+
     </main>
   </div>
 </template>
@@ -82,7 +71,7 @@
 import { ref, computed, onMounted } from 'vue'
 import MapContainer from './components/MapContainer.vue'
 import Crosshair from './components/Crosshair.vue'
-import EventLogger from './components/EventLogger.vue'
+
 import NotePanel from './components/NotePanel.vue'
 import ConfigPanel from './components/ConfigPanel.vue'
 
@@ -94,12 +83,11 @@ export default {
   components: {
     MapContainer,
     Crosshair,
-    EventLogger,
     NotePanel,
     ConfigPanel
   },
   setup() {
-    const showEventLogger = ref(false)
+
     const showNotePanel = ref(false)
     const showConfigPanel = ref(false)
     const currentCoordinates = ref({ lat: null, lng: null, accuracy: null })
@@ -117,10 +105,7 @@ export default {
     
     const allNotes = computed(() => [...localNotes.value, ...serverNotes.value])
 
-    const toggleEventLogger = () => {
-      showEventLogger.value = !showEventLogger.value
-      logEvent('ui', `Event logger ${showEventLogger.value ? 'opened' : 'closed'}`)
-    }
+
 
     const handleCoordinatesChanged = (coords) => {
       currentCoordinates.value = coords
@@ -172,14 +157,11 @@ export default {
     })
 
     return {
-      showEventLogger,
       showNotePanel,
       showConfigPanel,
       currentCoordinates,
       allNotes,
       appConfig,
-      events,
-      toggleEventLogger,
       openNotePanel,
       openConfigPanel,
       handleCoordinatesChanged,

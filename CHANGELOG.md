@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Version Management**: This project follows semantic versioning and increments version numbers with each code update as requested.
 
+## [0.1.7] - 2025-07-10
+
+### Removed
+- **Event Log UI**: Removed Event Log button and popup panel from user interface as requested
+- **Event Logger Component**: Removed EventLogger component import and usage from main app
+
+### Technical Details
+- Event logging functionality continues to work in background (useEventLogger composable still active)
+- Removed showEventLogger state variable and toggleEventLogger function
+- Cleaned up component imports and return statements
+- Logs are still captured and stored for debugging purposes, just no UI display
+
 ## [0.1.6] - 2025-07-10
 
 ### Fixed
