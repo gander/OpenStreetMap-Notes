@@ -178,8 +178,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 Adam Gąsowski
 
-## Version
+## Changelog
 
-Current version: 0.1.3
-
-See [CHANGELOG.md](CHANGELOG.md) for version history and updates.
+For detailed version history and updates, see [CHANGELOG.md](CHANGELOG.md).
