@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Version Management**: This project follows semantic versioning and increments version numbers with each code update as requested.
 
+## [0.1.4] - 2025-07-10
+
+### Added
+- **Event Log Button**: Added dedicated "Event Log" button to main header next to Config button
+- **Persistent Event Logger**: Event logger popup now stays open when activated (removed close/hide functionality)
+
+### Changed
+- **Event Logger Position**: Event logger popup now appears above settings panel with higher z-index (3000)
+- **Header Controls**: Event Log button moved from Config panel to main header for better accessibility
+- **Event Logger UI**: Removed close button to prevent accidental hiding as requested
+
+### Removed
+- **Event Logger Toggle**: Removed "Show/Hide Event Log" button from Config panel Debug Tools section
+- **Event Logger Close Function**: Removed ability to close event logger popup once opened
+
+### Technical Details
+- Enhanced z-index hierarchy: Event Logger (3000) > Config Panel (2000)
+- Simplified event logger component by removing close emit functionality
+- Updated ConfigPanel component to remove event logger related props and methods
+
 ## [0.1.3] - 2025-07-10
 
 ### Added
