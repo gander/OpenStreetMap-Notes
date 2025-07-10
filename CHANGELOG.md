@@ -7,6 +7,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Version Management**: This project follows semantic versioning and increments version numbers with each code update as requested.
 
+## [0.1.3] - 2025-07-10
+
+### Added
+- **Configuration Panel**: Complete API endpoint configuration system
+  - Media-to-Text API endpoint for audio/image transcription
+  - OSM Tag Generation API endpoint for automated tagging  
+  - Data Storage API endpoint for bidirectional data sync
+- **Application Settings**: Toggle switches for auto-save, server notes loading, GPS accuracy
+- **Debug Tools**: Event log toggle, configuration export, reset to defaults
+- **Local Storage**: Configuration persistence across browser sessions
+
+### Changed
+- **Header Button**: Replaced "Events" with "Config" button for better UX
+- **Panel System**: Improved modal system for configuration management
+
+### Technical Details
+- Enhanced composables pattern for configuration management
+- Local storage integration for settings persistence
+- Improved component architecture with ConfigPanel.vue
+
+## [0.1.2] - 2025-07-10
+
+### Added
+- **Multimedia Note System**: Complete note-taking functionality
+  - Text notes with rich textarea input
+  - Audio recording with MediaRecorder API
+  - Photo capture from camera or gallery selection
+- **Pin System on Map**: Visual representation of notes
+  - Green pins for local (unsaved) notes
+  - Red pins for server-saved notes
+  - Click interaction for pin management
+- **Local Storage**: Notes persistence in browser localStorage
+- **Note Management**: Save, edit, and organize location-based notes
+
+### Changed
+- **Map Library**: Migrated from Leaflet to OpenLayers for better precision
+- **Architecture**: Implemented proper note storage composables
+- **Data Flow**: Enhanced coordinate selection and note creation workflow
+
+### Removed
+- **Coordinate Copying**: Removed unauthorized coordinate copying functionality
+- **Event Log Clearing**: Removed prohibited log clearing capabilities
+
+### Technical Details
+- Vue 3 with OpenLayers integration via vue3-openlayers
+- MediaRecorder API for audio capture
+- File API for photo handling
+- Reactive note storage system with composables
+
 ## [0.1.1] - 2025-07-10
 
 ### Changed

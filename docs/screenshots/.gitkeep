@@ -1,0 +1,20 @@
+# Screenshots Directory
+
+This directory contains application screenshots for documentation purposes.
+
+## Naming Convention
+- `v{version}-{description}.png`
+- Example: `v0.1.3-main-interface.png`
+
+## Screenshot Guidelines
+- Capture at standard desktop resolution (1920x1080 recommended)
+- Show key features and functionality
+- Include version number in interface when possible
+- Use consistent browser window size for comparable views
+
+## Current Screenshots
+- v0.1.3-main-interface.png - Main application interface
+- v0.1.3-config-panel.png - Configuration panel
+- v0.1.3-note-panel.png - Note creation panel
+- v0.1.2-map-pins.png - Map with pin system
+- v0.1.1-gps-targeting.png - GPS targeting system

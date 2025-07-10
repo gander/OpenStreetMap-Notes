@@ -7,7 +7,7 @@ This is a Vue.js-based GPS coordinate selector application for OpenStreetMap not
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
-Project approach: Starting from version 0.1.0, increment version with each code update.
+Project approach: Starting from version 0.1.0, increment version with each code update. Update CHANGELOG.md and capture screenshots for major releases.
 Testing methodology: Test-Driven Development (TDD) with unit tests from the start.
 All content language: English (documentation, UI, UX, generated content).
 Author: Adam Gąsowski.

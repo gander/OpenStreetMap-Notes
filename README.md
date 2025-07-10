@@ -92,6 +92,37 @@ The application integrates with external APIs for:
 - **🟢 Green Pins**: Locally created notes (editable)
 - **🔴 Red Pins**: Server-saved notes (read-only)
 
+## Screenshots
+
+### Version 0.1.3 - Configuration Panel
+*Latest release featuring complete API endpoint configuration*
+
+![OSM Notes v0.1.3 - Main Interface](docs/screenshots/v0.1.3-main-interface.png)
+*Main application interface with OpenLayers map, crosshair targeting, and multimedia note-taking capabilities*
+
+![OSM Notes v0.1.3 - Configuration Panel](docs/screenshots/v0.1.3-config-panel.png)
+*Configuration panel for API endpoints, application settings, and debug tools*
+
+![OSM Notes v0.1.3 - Note Creation](docs/screenshots/v0.1.3-note-panel.png)
+*Multimedia note creation panel with text, audio recording, and photo capture options*
+
+### Version 0.1.2 - Note-Taking System
+*Multimedia note-taking capabilities with pin system*
+
+![OSM Notes v0.1.2 - Map with Pins](docs/screenshots/v0.1.2-map-pins.png)
+*OpenLayers map showing green pins (local notes) and red pins (server notes)*
+
+### Version 0.1.1 - Core Functionality
+*Initial OpenStreetMap integration with GPS targeting*
+
+![OSM Notes v0.1.1 - GPS Targeting](docs/screenshots/v0.1.1-gps-targeting.png)
+*Crosshair targeting system with GPS location and coordinate display*
+
+### Evolution Overview
+- **v0.1.1**: Basic coordinate selection and GPS targeting
+- **v0.1.2**: Added multimedia note-taking and pin system  
+- **v0.1.3**: Configuration panel with API endpoint management
+
 ## Testing
 
 ```bash
