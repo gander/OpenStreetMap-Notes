@@ -52,3 +52,7 @@ args = "vite build && echo \"Build completed to dist at $(date)\""
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[deployment]
+deploymentTarget = "static"
+publicDir = "dist"
