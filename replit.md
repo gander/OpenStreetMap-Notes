@@ -1,4 +1,4 @@
-# OSM Notes v0.1.0
+# OSM Notes
 
 ## Overview
 

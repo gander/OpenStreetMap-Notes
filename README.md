@@ -1,4 +1,4 @@
-# OSM Notes v0.1.0
+# OSM Notes
 
 A frontend-only Vue 3 application for precise GPS coordinate selection using OpenStreetMap with crosshair targeting system. Features multimedia note-taking capabilities with voice recording, photo capture, and text notes, all linked to specific GPS coordinates.
 
@@ -160,6 +160,8 @@ Adam Gąsowski
 
 ## Version
 
-Current version: 0.1.0
+Current version: 0.1.1
+
+**Version Management**: This project follows semantic versioning and increments version numbers with each code update. The current version is displayed in the application title bar.
 
 See [CHANGELOG.md](CHANGELOG.md) for version history and updates.

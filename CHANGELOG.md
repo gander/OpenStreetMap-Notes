@@ -10,14 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.1] - 2025-07-10
 
 ### Changed
-- **Project Name**: Updated from "GPS Coordinate Selector" to "OSM Notes v0.1.0"
-- **Application Title**: Updated in HTML title, header, and all documentation
+- **Project Name**: Simplified to "OSM Notes" (from "GPS Coordinate Selector")
+- **Version Display**: Added version number in application title bar
+- **Documentation**: Updated README and replit.md to use clean project name
 - **Versioning Policy**: Established automatic version incrementing with each code change
 
-### Documentation
-- **CHANGELOG**: Added version management policy and project name change
-- **README**: Updated project title to reflect OSM Notes focus
-- **replit.md**: Updated project overview with new name and focus
+### Technical
+- **Git Integration**: Set up version control with proper commit structure
+- **Build Process**: Automatic builds to dist directory on code changes
 
 ## [0.1.0] - 2025-07-10
 
