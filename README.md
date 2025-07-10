@@ -4,26 +4,30 @@ A frontend-only Vue 3 application for precise GPS coordinate selection using Ope
 
 ## Features
 
-- **🎯 Crosshair Targeting**: Precise coordinate selection with visual crosshair overlay
-- **🗺️ OpenStreetMap Integration**: Free, open-source mapping with Leaflet
-- **📍 GPS Geolocation**: Browser-based location detection and positioning
-- **🎙️ Voice Notes**: Record audio notes that get transcribed to text via external API
-- **📸 Photo Notes**: Capture or select photos that get processed to text via OCR
-- **📝 Text Notes**: Manual text input with full editing capabilities
-- **🏷️ OSM Tags**: Automatic OSM tag generation from notes via external API
-- **💾 Local Storage**: Notes persist across browser sessions until exported
-- **📊 Event Logging**: Comprehensive activity tracking with toggleable panel
-- **📱 Mobile Responsive**: Optimized for mobile devices and touch interactions
+- **🎯 Crosshair Targeting**: Precise coordinate selection with visual crosshair overlay system
+- **🗺️ OpenStreetMap Integration**: Advanced mapping with OpenLayers for superior coordinate precision
+- **📍 GPS Geolocation**: Browser-based location detection with comprehensive error handling
+- **🎙️ Voice Notes**: Record audio notes with AI-powered transcription via external API integration
+- **📸 Photo Notes**: Capture or select photos with OCR processing and image analysis
+- **📝 Text Notes**: Manual text input with full editing and multimedia capabilities
+- **🏷️ OSM Tags**: Intelligent OSM tag generation from note content using AI analysis
+- **💾 Dual Storage**: Local browser storage for drafts plus external API for persistent data
+- **🎯 Pin System**: Visual distinction between local notes (green pins) and server notes (red pins)
+- **📊 Background Logging**: Comprehensive activity tracking for debugging and analytics
+- **📱 Mobile Responsive**: Fully optimized for mobile devices and touch interactions
+- **⚙️ Configuration Panel**: Configurable API endpoints for external service integration
+- **🔄 Auto-Build**: Automated dist builds with version management and change tracking
 
 ## Technology Stack
 
-- **Vue 3** with Composition API
-- **TypeScript 5.8** for type safety
-- **Vite 6** for fast development and optimized builds
-- **Leaflet** for interactive mapping
-- **VueUse 13** for composable utilities
-- **Vitest 3.2** for unit testing with TDD approach
-- **Bun 1.2** runtime support
+- **Vue 3.5.17** with Composition API for reactive frontend
+- **TypeScript 5.8** for complete type safety
+- **Vite 6.3.5** for fast development and optimized builds
+- **OpenLayers** (vue3-openlayers) for precise mapping and coordinate selection
+- **VueUse 13** for enhanced composables and utilities
+- **Vitest 3.2** for comprehensive unit testing with TDD methodology
+- **Node.js 20+** with Bun 1.2 runtime support
+- **Font Awesome 6.4.0** for consistent iconography
 
 ## Quick Start
 
