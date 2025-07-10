@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Version Management**: This project follows semantic versioning and increments version numbers with each code update as requested.
 
+## [0.1.5] - 2025-07-10
+
+### Fixed
+- **Event Logger Display Issue**: Fixed EventLogger component emits declaration causing display problems
+- **Event Log Button Functionality**: Event Log button in header now properly shows/hides the event logger popup
+
+### Technical Details
+- Removed unused 'close' emit from EventLogger component
+- EventLogger now displays correctly when showEventLogger state is toggled
+
 ## [0.1.4] - 2025-07-10
 
 ### Added

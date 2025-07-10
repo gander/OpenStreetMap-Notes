@@ -4,7 +4,7 @@
     <header class="header">
       <h1 class="header__title">
         <i class="fas fa-crosshairs"></i>
-        OSM Notes v0.1.4
+        OSM Notes v0.1.5
       </h1>
       <div class="header__controls">
         <button 

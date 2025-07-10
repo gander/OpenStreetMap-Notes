@@ -50,7 +50,7 @@ export default {
       required: true
     }
   },
-  emits: ['close'],
+  emits: [],
   setup(props) {
     const logContent = ref(null)
 
