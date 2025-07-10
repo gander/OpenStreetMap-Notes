@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a Vue.js-based GPS coordinate selector application for OpenStreetMap note-taking that allows users to interact with maps and select coordinates. The application uses OpenLayers for mapping functionality, provides geolocation services, and includes comprehensive multimedia note-taking capabilities with external API integration for transcription and OSM tag generation.
+This is a Vue.js-based GPS coordinate selector application for OpenStreetMap note-taking that allows users to interact with maps and select coordinates. The application uses OpenLayers for mapping functionality, provides geolocation services, and includes comprehensive multimedia note-taking capabilities with external API integration for transcription and OSM tag generation. Features include configurable API endpoints, local storage, and a pin system for notes.
 
 ## User Preferences
 
@@ -53,8 +53,15 @@ License: MIT.
 ## Key Components
 
 ### Core Application
-- **App.vue**: Main application component (referenced but not visible in files)
-- **main.js**: Application entry point that mounts the Vue app
+- **App.vue**: Main application component with note-taking and configuration management
+- **main.js**: Application entry point that mounts the Vue app with OpenLayers integration
+
+### UI Components
+- **MapContainer.vue**: OpenLayers map with GPS location and note pins
+- **NotePanel.vue**: Multimedia note creation (text, audio, photos)
+- **ConfigPanel.vue**: API endpoint configuration and application settings
+- **Crosshair.vue**: Precise coordinate targeting overlay
+- **EventLogger.vue**: Debug logging panel
 
 ### Composables (Reusable Logic)
 - **useGeolocation.js**: Handles browser geolocation API with error handling and loading states

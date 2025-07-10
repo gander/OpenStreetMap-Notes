@@ -4,7 +4,7 @@
     <header class="header">
       <h1 class="header__title">
         <i class="fas fa-crosshairs"></i>
-        OSM Notes v0.1.2
+        OSM Notes v0.1.3
       </h1>
       <div class="header__controls">
         <button 
@@ -18,12 +18,12 @@
         </button>
         
         <button 
-          @click="toggleEventLogger" 
+          @click="openConfigPanel" 
           class="btn btn--secondary"
-          :class="{ 'btn--active': showEventLogger }"
+          title="Open configuration"
         >
-          <i class="fas fa-list"></i>
-          <span class="btn__text">Events</span>
+          <i class="fas fa-cog"></i>
+          <span class="btn__text">Config</span>
         </button>
       </div>
     </header>
@@ -53,6 +53,15 @@
         @save-note="handleSaveNote"
       />
 
+      <!-- Configuration Panel -->
+      <ConfigPanel 
+        :is-visible="showConfigPanel"
+        :show-event-logger="showEventLogger"
+        @close="showConfigPanel = false"
+        @save-config="handleSaveConfig"
+        @toggle-event-logger="toggleEventLogger"
+      />
+
       <!-- Event Logger Panel -->
       <EventLogger 
         v-if="showEventLogger"
@@ -69,6 +78,7 @@ import MapContainer from './components/MapContainer.vue'
 import Crosshair from './components/Crosshair.vue'
 import EventLogger from './components/EventLogger.vue'
 import NotePanel from './components/NotePanel.vue'
+import ConfigPanel from './components/ConfigPanel.vue'
 
 import { useEventLogger } from './composables/useEventLogger'
 import { useNoteStorage } from './composables/useNoteStorage'
@@ -79,12 +89,22 @@ export default {
     MapContainer,
     Crosshair,
     EventLogger,
-    NotePanel
+    NotePanel,
+    ConfigPanel
   },
   setup() {
     const showEventLogger = ref(false)
     const showNotePanel = ref(false)
+    const showConfigPanel = ref(false)
     const currentCoordinates = ref({ lat: null, lng: null, accuracy: null })
+    const appConfig = ref({
+      mediaToTextEndpoint: '',
+      osmTagEndpoint: '',
+      dataStorageEndpoint: '',
+      autoSaveLocal: true,
+      loadServerNotes: true,
+      gpsHighAccuracy: true
+    })
     
     const { events, logEvent } = useEventLogger()
     const { localNotes, serverNotes, saveLocalNote } = useNoteStorage()
@@ -116,6 +136,11 @@ export default {
       }
     }
 
+    const openConfigPanel = () => {
+      showConfigPanel.value = true
+      logEvent('ui', 'Configuration panel opened')
+    }
+
     const handleSaveNote = (noteData) => {
       const savedNote = saveLocalNote(noteData)
       showNotePanel.value = false
@@ -127,6 +152,11 @@ export default {
       // TODO: Show note details or edit panel for the clicked note
     }
 
+    const handleSaveConfig = (config) => {
+      appConfig.value = { ...config }
+      logEvent('config', 'Configuration saved with API endpoints updated')
+    }
+
     onMounted(() => {
       logEvent('system', 'Application initialized with note-taking capabilities')
     })
@@ -134,16 +164,20 @@ export default {
     return {
       showEventLogger,
       showNotePanel,
+      showConfigPanel,
       currentCoordinates,
       allNotes,
+      appConfig,
       events,
       toggleEventLogger,
       openNotePanel,
+      openConfigPanel,
       handleCoordinatesChanged,
       handleLocationFound,
       handleLocationError,
       handleSaveNote,
       handlePinClick,
+      handleSaveConfig,
       logEvent
     }
   }
