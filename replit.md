@@ -47,6 +47,16 @@ License: MIT.
 2. **OSM Tag Generation API (Endpoint #2)**: Processes notes + coordinates to generate OSM tags
 3. **Data Storage API (Endpoint #3)**: Bidirectional storage (GET/POST) for coordinate data with notes and tags
 
+### n8n Workflow Integration (Added: July 10, 2025)
+- **n8n 1.101.1 Compatibility**: Complete workflow files for import into n8n instance
+- **AI Agent Node Usage**: All AI processing uses OpenAI GPT-4o through AI Agent Node
+- **HTTP Request Node Integration**: External storage communication via HTTP Request Node
+- **Workflow Files**: Ready-to-import JSON files in `/n8n-workflows/` directory
+  - `media-to-text-workflow.json`: Audio/image transcription endpoint
+  - `osm-tag-generation-workflow.json`: OSM tag generation endpoint  
+  - `data-storage-workflow.json`: Data storage GET/POST endpoints
+- **Credentials Required**: OpenAI API key and external storage API authentication
+
 ### Data Persistence Strategy
 - **Local Storage**: Browser localStorage/IndexedDB for draft notes and coordinates
 - **Session Persistence**: Data survives browser restarts until explicitly exported or deleted

@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "instanceId": "osm-notes-data-storage"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "notes",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "get-webhook",
+      "name": "GET Notes Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 200],
+      "webhookId": "get-notes-endpoint"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "notes",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "post-webhook",
+      "name": "POST Notes Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 400],
+      "webhookId": "post-notes-endpoint"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.external_api_url || 'https://your-external-storage-api.com/api/notes' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "bbox",
+              "value": "={{ $json.query.bbox }}"
+            },
+            {
+              "name": "limit",
+              "value": "={{ $json.query.limit || '100' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-get-request",
+      "name": "HTTP Request Node - GET",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "external-api-auth",
+          "name": "External API Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.external_api_url || 'https://your-external-storage-api.com/api/notes' }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={\n  \"id\": \"{{ $json.id || $uuid() }}\",\n  \"coordinates\": {\n    \"lat\": {{ $json.coordinates.lat }},\n    \"lng\": {{ $json.coordinates.lng }}\n  },\n  \"note_text\": \"{{ $json.note_text }}\",\n  \"osm_tags\": {{ JSON.stringify($json.osm_tags || {}) }},\n  \"media_data\": {{ JSON.stringify($json.media_data || {}) }},\n  \"timestamp\": \"{{ $json.timestamp || new Date().toISOString() }}\",\n  \"source\": \"osm-notes-app\"\n}",
+        "options": {}
+      },
+      "id": "http-post-request",
+      "name": "HTTP Request Node - POST",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 400],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "external-api-auth",
+          "name": "External API Authentication"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process GET response from external API\nconst externalData = $input.first().json;\nconst webhookQuery = $('GET Notes Webhook').first().json.query || {};\n\n// Transform external API response to our format\nconst notes = Array.isArray(externalData.data) ? externalData.data : (Array.isArray(externalData) ? externalData : []);\n\nconst transformedNotes = notes.map(note => ({\n  id: note.id,\n  type: 'server',\n  coordinates: {\n    lat: parseFloat(note.coordinates?.lat || note.lat),\n    lng: parseFloat(note.coordinates?.lng || note.lng)\n  },\n  note_text: note.note_text || note.text || '',\n  osm_tags: note.osm_tags || {},\n  media_data: note.media_data || {},\n  timestamp: note.timestamp || note.created_at,\n  source: note.source || 'external'\n}));\n\nreturn {\n  success: true,\n  notes: transformedNotes,\n  count: transformedNotes.length,\n  bbox: webhookQuery.bbox,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "get-processor",
+      "name": "GET Response Processor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process POST response from external API\nconst externalResponse = $input.first().json;\nconst originalData = $('POST Notes Webhook').first().json;\n\nreturn {\n  success: true,\n  message: 'Note saved successfully',\n  note_id: externalResponse.id || externalResponse.data?.id,\n  coordinates: originalData.coordinates,\n  external_response: externalResponse,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "post-processor",
+      "name": "POST Response Processor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "get-response",
+      "name": "GET Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "post-response",
+      "name": "POST Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": false,\n  \"error\": \"{{ $json.error?.message || 'Storage operation failed' }}\",\n  \"timestamp\": \"{{ new Date().toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "error-response",
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 560]
+    }
+  ],
+  "connections": {
+    "GET Notes Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Node - GET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST Notes Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request Node - POST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Node - GET": {
+      "main": [
+        [
+          {
+            "node": "GET Response Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Node - POST": {
+      "main": [
+        [
+          {
+            "node": "POST Response Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GET Response Processor": {
+      "main": [
+        [
+          {
+            "node": "GET Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST Response Processor": {
+      "main": [
+        [
+          {
+            "node": "POST Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.101.1",
+  "id": "data-storage-workflow",
+  "name": "OSM Notes - Data Storage API"
+}

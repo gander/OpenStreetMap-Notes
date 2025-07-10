@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Version Management**: This project follows semantic versioning and increments version numbers with each code update as requested.
 
+## [0.1.8] - 2025-07-10
+
+### Added
+- **n8n Workflow Files**: Created complete n8n 1.101.1 workflow import files for API endpoints
+- **Media to Text Workflow**: AI-powered audio/image transcription using AI Agent Node (OpenAI GPT-4o)
+- **OSM Tag Generation Workflow**: Automatic OSM tag generation from note content using AI Agent Node
+- **Data Storage Workflow**: Bidirectional data storage (GET/POST) using HTTP Request Node for external services
+
+### Technical Details
+- All workflows use AI Agent Node (OpenAI integration) for intelligent processing
+- HTTP Request Node integration for external storage services
+- Complete webhook endpoints with error handling and validation
+- Polish language documentation with setup instructions
+- Compatible with n8n 1.101.1 with proper node versions
+
+### Integration
+- Ready-to-import JSON workflow files in `/n8n-workflows/` directory
+- Comprehensive README with configuration instructions
+- Credential setup guide for OpenAI and external API authentication
+
 ## [0.1.7] - 2025-07-10
 
 ### Removed

@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "instanceId": "osm-notes-tag-generation"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "generate-osm-tags",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "OSM Tag Generation Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "osm-tag-generation-endpoint"
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "messageType": "text",
+          "text": "=You are an OpenStreetMap tagging expert. Based on the note content and coordinates provided, generate appropriate OSM tags.\n\nNote content: {{ $json.note_text }}\nCoordinates: {{ $json.coordinates?.lat }}, {{ $json.coordinates?.lng }}\n\nAnalyze the content and suggest relevant OSM tags in this format:\n{\n  \"tags\": {\n    \"key1\": \"value1\",\n    \"key2\": \"value2\"\n  },\n  \"confidence\": 0.95,\n  \"reasoning\": \"Brief explanation of tag choices\"\n}\n\nFocus on standard OSM tags like amenity, shop, tourism, highway, natural, building, etc. Be specific and accurate."
+        },
+        "options": {}
+      },
+      "id": "ai-tag-generation",
+      "name": "AI Agent Node",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [460, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-credentials",
+          "name": "OpenAI Credentials"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse AI response and validate OSM tags\nconst aiResponse = $input.first().json.choices[0].message.content;\nconst webhookData = $('OSM Tag Generation Webhook').first().json;\n\ntry {\n  const parsedResponse = JSON.parse(aiResponse);\n  \n  // Validate and clean tags\n  const validatedTags = {};\n  if (parsedResponse.tags && typeof parsedResponse.tags === 'object') {\n    for (const [key, value] of Object.entries(parsedResponse.tags)) {\n      if (typeof key === 'string' && typeof value === 'string' && key.length > 0 && value.length > 0) {\n        validatedTags[key] = value;\n      }\n    }\n  }\n  \n  return {\n    success: true,\n    tags: validatedTags,\n    confidence: parsedResponse.confidence || 0.8,\n    reasoning: parsedResponse.reasoning || 'AI-generated tags based on note content',\n    coordinates: webhookData.coordinates,\n    original_note: webhookData.note_text,\n    timestamp: new Date().toISOString()\n  };\n} catch (error) {\n  return {\n    success: false,\n    error: 'Failed to parse AI response',\n    tags: {},\n    coordinates: webhookData.coordinates,\n    timestamp: new Date().toISOString()\n  };\n}"
+      },
+      "id": "tag-processor",
+      "name": "Tag Processor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "response-node",
+      "name": "Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": false,\n  \"error\": \"{{ $json.error?.message || 'Tag generation failed' }}\",\n  \"timestamp\": \"{{ new Date().toISOString() }}\"\n}",
+        "options": {}
+      },
+      "id": "error-response",
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 420]
+    }
+  ],
+  "connections": {
+    "OSM Tag Generation Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent Node": {
+      "main": [
+        [
+          {
+            "node": "Tag Processor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tag Processor": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.101.1",
+  "id": "osm-tag-generation-workflow",
+  "name": "OSM Notes - Tag Generation API"
+}
